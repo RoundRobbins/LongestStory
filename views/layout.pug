@@ -2,5 +2,16 @@ doctype html
 html
 	head
 		title="Round Robins"
-	body
+		link(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css")
+		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js")
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js")
+		script(src="https://cdn.socket.io/socket.io-1.4.5.js")
+		script(src="http://unpkg.com/angular-ui-router/release/angular-ui-router.min.js")
+
+		script(src="js/main.js")
+		script(src="js/controllers/StoryController.js")
+		script(src="js/services/StoryService.js")
+
+	body(ng-app="RoundRobin")
 		block content
