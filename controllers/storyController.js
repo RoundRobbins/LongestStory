@@ -19,6 +19,11 @@ var storyController = function(io)
 	var inVoting = false;
 	var timeOut = -1;
 
+	io.on('connection', function(socket){
+		console.log('Robin in the nest...');
+		socket.emit('SOCK_HELLO', 'Connected to nest...');
+	});
+
 	var triggerRotation = function(){
 		if(inVoting) return;
 
@@ -33,6 +38,8 @@ var storyController = function(io)
 				}
 
 				currUser = result[0]._id;
+
+				io.emit('USER_SWITCH', { writer: result[0].nickname })
 				console.log(currUser);
 			});
 		}
