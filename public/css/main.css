@@ -1,0 +1,32 @@
+body{
+	background-color: #EEEEEE;
+}
+
+/*Signin view styles*/
+.signin-container{
+	height: 100vh;
+}
+
+.signin-logo{
+	width: 25%;
+	height: 25%;
+}
+
+.input-field input[type=text]:focus {
+     border-bottom: 1px solid #212121;
+     box-shadow: 0 1px 0 0 #212121;
+}
+
+.input-field label{
+	color: #212121;
+}
+
+.input-field input[type=text]:focus + label {
+     color: #212121;
+}
+
+.btn-dark{
+	color: #000;
+	background-color: #fff;
+}
+/*/Signin styles*/

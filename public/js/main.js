@@ -7,5 +7,11 @@ app.config(function($stateProvider, $urlRouterProvider){
 		controller: 'StoryCtrl'
 	})
 
-	$urlRouterProvider.otherwise('/story');
+	$stateProvider.state('signin', {
+		url: '/signin',
+		templateUrl: '../templates/signin.html',
+		controller: 'StoryCtrl'
+	})
+
+	$urlRouterProvider.otherwise('/signin');
 });

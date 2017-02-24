@@ -1,5 +1,5 @@
 angular.module('RoundRobin')
-.factory('StoryService', function($q, $http){
+.factory('StoryService', function($q, $http, UserService){
 	var o = {};
 
 	var baseUrl = "http://127.0.0.1:3000";
@@ -15,5 +15,19 @@ angular.module('RoundRobin')
 
 		return deferred.promise;
 	}
+
+	o.writeRequest = function(){
+		var deferred = $q.defer();
+		var userId = LoginService.getUserId();
+
+		$http.post(baseUrl + '/story/' + userId + '/write').then(function(response){
+			deferred.resolve(response.data[0]);
+		}, function(err){
+			deferred.reject({ status: "ERROR", msg: err });
+		});
+
+		return deferred.promise;
+	}
+
 	return o;
 });
