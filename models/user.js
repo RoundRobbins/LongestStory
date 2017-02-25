@@ -6,6 +6,10 @@ var userSchema = new mongoose.Schema({
 		type: Boolean,
 		default: false
 	},
+	writerNonce: {
+		type: String,
+		default: null
+	},
 	timestamp: {
 		type: Date,
 		default: Date.now

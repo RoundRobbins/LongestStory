@@ -5,13 +5,13 @@
 
 	<div class="row">
 		 <div class="input-field col s3 offset-s4">
-			<input placeholder="Nickname" id="nickname" type="text">
-			<label for="nickname">Nickname</label>
+			<input ng-model="user.nickname" placeholder="Nickname" id="nickname" type="text" class="validate">
+			<label for="nickname" data-error="You must have a nickname bud">Nickname</label>
         </div>
 
 	</div>
 
     <div class="row">
-      	<a class="waves-effect waves-light btn btn-dark col s1 offset-s5"> Signin </a>
+      	<a ng-click="signin()" class="waves-effect waves-light btn btn-dark col s1 offset-s5"> Signin </a>
     </div>
 </div>
