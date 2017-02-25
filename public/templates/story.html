@@ -1,1 +1,33 @@
-<h6> Hello </h6>
+<div class="row white">
+	<div class="col s12">
+		<h6 class="grey-text text-darken-1 center-align"> World's Longest Story </h6>
+	</div>
+</div>
+
+<div class="row story-container">
+	<div class="col s4 left-nav">
+		<div class="row pane-header">
+			<div class="col offset-s1">
+				<img src="img/robin.png" class="signin-logo circle responsive-image"/>
+			</div>
+
+			<div class="col offset-s1">
+				<h5> {{ user.nickname }} </h5>
+			</div>
+		</div>
+
+		<div class="row">
+			<h5 class="col offset-s1"> Writers </h5>
+		</div>
+
+		<div ng-if="writers.length > 0" ng-repeat="writer in writers" class="row">
+				<h6 class="col s2 offset-s1 center-align"> {{ writer.nickname }} </h6>
+		</div>
+	</div>
+
+	<div class="col s8">
+		<div class="row">
+			<a ng-click="write()" class="waves-effect waves-light btn btn-dark col s2 offset-s2"> Let Me Write </a>
+		</div>
+	</div>
+</div>

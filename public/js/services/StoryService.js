@@ -8,7 +8,7 @@ angular.module('RoundRobin')
 		var deferred = $q.defer();
 
 		$http.get(baseUrl + '/story/writers').then(function(response){
-			deferred.resolve({ status: "SUCCESS", data: response.data });
+			deferred.resolve({ status: "SUCCESS", writers: response.data });
 		}, function(error){
 			deferred.reject({ status: "ERROR", msg: error });
 		});
@@ -18,10 +18,10 @@ angular.module('RoundRobin')
 
 	o.writeRequest = function(){
 		var deferred = $q.defer();
-		var userId = LoginService.getUserId();
+		var user = UserService.getUser();
 
-		$http.post(baseUrl + '/story/' + userId + '/write').then(function(response){
-			deferred.resolve(response.data[0]);
+		$http.post(baseUrl + '/story/' + user._id + '/write').then(function(response){
+			deferred.resolve(response.data);
 		}, function(err){
 			deferred.reject({ status: "ERROR", msg: err });
 		});

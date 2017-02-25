@@ -2,7 +2,8 @@ angular.module('RoundRobin')
 .controller('StoryCtrl', function($scope, StoryService, UserService){
 	var socket = io.connect('http://127.0.0.1:3000/nest');
 
-	$scope.user = { nickname: "" };
+	$scope.user = UserService.getUser();
+	$scope.writers = [];
 
 	socket.on('SOCK_HELLO', function(data){
 		console.log(data);
@@ -13,6 +14,19 @@ angular.module('RoundRobin')
 		})
 	});
 
+	socket.on('REFRESH_WRITERS', function(data){
+		getWriters();
+	})
+
+	var getWriters = function(){
+		StoryService.getWriters().then(function(result){
+			$scope.writers = result.writers;
+			console.log($scope.writers);
+		}, function(err){
+			console.log(err);
+		})
+	}
+
 	$scope.signin = function(){
 		console.log($scope.user.nickname);
 		if($scope.user.nickname === ''){
@@ -21,20 +35,16 @@ angular.module('RoundRobin')
 			return;
 		}
 
-		UserService.signin($scope.user).then(function(result){
-			console.log(result);
-			$scope.user = result;
-		}, function(err){
-			console.log(err);
-		});
+		UserService.signin($scope.user);
 	}
 
 	$scope.write = function(){
 		StoryService.writeRequest().then(function(result){
-			console.log(result);
 			UserService.setNonce(result.nonce);
 		}, function(err){
 			console.log(err);
 		})
 	}
+
+	getWriters();
 });
