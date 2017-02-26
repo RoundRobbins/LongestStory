@@ -1,11 +1,9 @@
-var mongoose = require('mongoose');
 var express = require('express');
 var crypto = require('crypto');
 var Story = require('../models/story');
 var User = require('../models/user');
 
-var storyController = function(io)
-{
+var storyController = function(io) {
 	var router = express.Router();
 
 	var snippet = {
@@ -34,18 +32,18 @@ var storyController = function(io)
 			q.exec(function(err, result){
 				if(err) throw err;
 
-				if(result.length == 0){
+				if(result.length === 0){
 					return;
 				}
 
 				currUser = result[0]._id;
 
-				io.emit('USER_SWITCH', { writer: result[0].nickname, nonce: result[0].nonce })
+				io.emit('USER_SWITCH', { writer: result[0].nickname, nonce: result[0].nonce });
 				console.log(currUser);
 			});
-		}
+		};
 
-		if(currUser != undefined && currUser != ""){
+		if(currUser !== undefined && currUser !== ""){
 			console.log("Detaching current user");
 			io.emit('REFRESH_WRITERS');
 			User.findOneAndUpdate({ _id: currUser }, { isWriter: false, writerNonce: null }, function(err, result){
@@ -63,7 +61,7 @@ var storyController = function(io)
 		timeOut = setTimeout(function(){
 			triggerRotation();
 		}, 10000);
-	}
+	};
 
 	router.post('/:title', function(req, res){
 		var title = req.params.title;
@@ -75,7 +73,7 @@ var storyController = function(io)
 			}
 
 			res.json(result);
-		})
+		});
 	});
 
 	router.post('/:id/append', function(req, res){
@@ -104,8 +102,8 @@ var storyController = function(io)
 				inVoting = false;
 				console.log(result);
 				triggerRotation();
-			})
-		}, 30000)
+			});
+		}, 30000);
 		res.json({ status: "SUCCESS" });
 	});
 
@@ -118,7 +116,7 @@ var storyController = function(io)
 			return;
 		}
 
-		if(snippet == undefined || snippet.id === id){
+		if(snippet === undefined || snippet.id === id){
 			res.json({ status: "ERROR", msg: "Could not register vote"});
 			return;
 		}
@@ -154,11 +152,11 @@ var storyController = function(io)
 			}
 
 			res.json(writers);
-		})
+		});
 	});
 
 	triggerRotation();
 	return router;
-}
+};
 
 module.exports = storyController;
