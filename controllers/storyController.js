@@ -39,14 +39,15 @@ var storyController = function(io)
 
 				currUser = result[0]._id;
 
-				io.emit('USER_SWITCH', { writer: result[0].nickname })
+				io.emit('USER_SWITCH', { writer: result[0].nickname, nonce: result[0].nonce })
 				console.log(currUser);
 			});
 		}
 
 		if(currUser != undefined && currUser != ""){
 			console.log("Detaching current user");
-			User.findOneAndUpdate({ _id: currUser }, { isWriter: false }, function(err, result){
+			io.emit('REFRESH_WRITERS');
+			User.findOneAndUpdate({ _id: currUser }, { isWriter: false, writerNonce: null }, function(err, result){
 				if(err){
 					console.log(err);
 					return;
@@ -125,19 +126,34 @@ var storyController = function(io)
 			snippet.votes.up += 1;
 		}
 		else if(vote === "D"){
-			snipper.votes.down -= 1;
+			snippet.votes.down -= 1;
 		}
 	});
 
 	router.post('/:id/write', function(req, res){
 		var id = req.params.id;
-		User.findOneAndUpdate({ _id: id }, { isWriter: true }, function(err, result){
+		var nonce = crypto.randomBytes(20).toString('hex');
+
+		User.findOneAndUpdate({ _id: id }, { isWriter: true, writerNonce: nonce }, function(err, result){
 			if(err){
 				res.json({ status: "ERROR", msg: err });
 				return;
 			}
-			res.json(result);
+
+			io.emit('REFRESH_WRITERS');
+			res.json({ nonce: nonce });
 		});
+	});
+
+	router.get('/writers', function(req, res){
+		User.find({ isWriter: true }, [ 'nickname' ],  function(err, writers){
+			if(err){
+				res.json({ status: "ERROR", msg: err });
+				return;
+			}
+
+			res.json(writers);
+		})
 	});
 
 	triggerRotation();

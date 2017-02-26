@@ -13,13 +13,4 @@ router.post('/signin', function(req, res){
 	});
 });
 
-router.get('/list/writers', function(req, res){
-	User.find({ isWriter: true }, function(err, result){
-		if(err){
-			res.json({ status: "ERROR", msg: err });
-		}
-		res.json(result);
-	});
-});
-
 module.exports = router;
