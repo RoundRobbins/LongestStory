@@ -25,9 +25,32 @@
 		</div>
 	</div>
 
+
 	<div class="col s8">
 		<div class="row">
+			<div ng-repeat="snippet in snippets" class="col s11">
+				<p class="flow-text"> {{ snippet.content }} </p>
+				<h7 class="col s1 offset-s8 grey-text"> {{ snippet.author.nickname }}</h7>
+			</div>
+		</div>
+
+		<div class="row">
 			<a ng-click="write()" class="waves-effect waves-light btn btn-dark col s2 offset-s2"> Let Me Write </a>
+		</div>
+	</div>
+
+	<div id="write-pad" class="modal bottom-sheet">
+		<div class="row">
+			<h5 class="col s3 offset-s1"> And then...? </h5>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s9 offset-s1">
+				<textarea ng-model="snippet.content" class="materialize-textarea"></textarea>
+			</div>
+			<div class="col s1">
+				<a ng-click="submit()" class="btn-floating btn-large waves-effect waves-light white"><i class="material-icons black-text">send</i></a>
+			</div>
 		</div>
 	</div>
 </div>

@@ -4,6 +4,16 @@ angular.module('RoundRobin')
 
 	$scope.user = UserService.getUser();
 	$scope.writers = [];
+	$scope.snippets = [];
+
+	$scope.isWriter = false;
+	$scope.snippet = {
+		author: {
+			id: $scope.user._id,
+			nickname: $scope.user.nickname
+		},
+		content: ""
+	};
 
 	socket.on('SOCK_HELLO', function(data){
 		console.log(data);
@@ -15,7 +25,27 @@ angular.module('RoundRobin')
 	});
 
 	socket.on('REFRESH_WRITERS', function(data){
+		$('#write-pad').modal('close');
 		getWriters();
+	});
+
+	socket.on('USER_SWITCH', function(data){
+		var user = UserService.getUser();
+
+		console.log(data);
+
+		if(data.nonce === user.nonce){
+			isWriter = true;
+			$('#write-pad').modal('open');
+			console.log(isWriter);
+		}
+		else{
+			isWriter = false;
+		}
+	});
+
+	socket.on('REFRESH_STORY', function(data){
+		getSnippets();
 	})
 
 	var getWriters = function(){
@@ -25,6 +55,26 @@ angular.module('RoundRobin')
 		}, function(err){
 			console.log(err);
 		})
+	}
+
+	var getSnippets = function(){
+		StoryService.getStorySnippets().then(function(result){
+			$scope.snippets = result;
+		}, function(err){
+			console.log(err);
+		});
+	}
+
+	var initialize = function(){
+		$('.modal').modal({
+			opacity: 0.8,
+			ready: function(modal, trigger){
+				console.log("Ready");
+			}
+		});
+
+		getWriters();
+		getSnippets();
 	}
 
 	$scope.signin = function(){
@@ -46,5 +96,15 @@ angular.module('RoundRobin')
 		})
 	}
 
-	getWriters();
+	$scope.submit = function(){
+		console.log($scope.snippet);
+		StoryService.submitSnippet($scope.snippet).then(function(result){
+			console.log(result);
+			$('#write-pad').modal('close');
+		}, function(err){
+			console.log(err);
+		})
+	}
+
+	initialize();
 });

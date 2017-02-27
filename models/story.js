@@ -5,7 +5,10 @@ var storySchema = new mongoose.Schema({
 	admin: String,
 	sections:[{
 		content: String,
-		author: String,
+		author: {
+			nickname: String,
+			id: String
+		},
 		timestamp: {
 			type: Date,
 			default: Date.now

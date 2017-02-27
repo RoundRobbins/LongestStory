@@ -64,9 +64,5 @@ angular.module('RoundRobin')
 		user.nonce = nonce;
 	}
 
-	o.getNonce = function(){
-		return user.nonce;
-	}
-
 	return o;
 });

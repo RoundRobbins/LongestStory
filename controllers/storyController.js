@@ -38,7 +38,7 @@ var storyController = function(io) {
 
 				currUser = result[0]._id;
 
-				io.emit('USER_SWITCH', { writer: result[0].nickname, nonce: result[0].nonce });
+				io.emit('USER_SWITCH', { writer: result[0].nickname, nonce: result[0].writerNonce });
 				console.log(currUser);
 			});
 		};
@@ -78,13 +78,13 @@ var storyController = function(io) {
 
 	router.post('/:id/append', function(req, res){
 		var id = req.params.id;
-		snippet.content = req.body.snippet;
+		snippet.content = req.body;
 		var inVoting = true;
 		console.log("CurrUser: " + currUser);
 		console.log("Snippet author: " + snippet.content.author);
 
 
-		if(snippet.content.author!== currUser.toString()){
+		if(snippet.content.author.id !== currUser.toString()){
 			res.json({ status: "ERROR", msg: "Unauthorized" });
 			return;
 		}
@@ -93,17 +93,20 @@ var storyController = function(io) {
 
 		setTimeout(function(){
 			//include some vote logic here
-			Story.findOneAndUpdate({ _id: id }, { $push: { sections: snippet.content} }, function(err, result){
+			Story.findOneAndUpdate({ _id: id }, { $push: { sections: snippet.content } }, function(err, result){
 				if(err){
 					console.log("Couldn't append the story...");
 					return;
 				}
 				snippet.votes = { up: 0, down: 0};
 				inVoting = false;
+				io.emit('REFRESH_STORY');
 				console.log(result);
+
 				triggerRotation();
 			});
 		}, 30000);
+
 		res.json({ status: "SUCCESS" });
 	});
 
@@ -132,8 +135,9 @@ var storyController = function(io) {
 	router.post('/:id/write', function(req, res){
 		var id = req.params.id;
 		var nonce = crypto.randomBytes(20).toString('hex');
+		var d = new Date();
 
-		User.findOneAndUpdate({ _id: id }, { isWriter: true, writerNonce: nonce }, function(err, result){
+		User.findOneAndUpdate({ _id: id }, { isWriter: true, writerNonce: nonce, timestamp: d }, function(err, result){
 			if(err){
 				res.json({ status: "ERROR", msg: err });
 				return;
@@ -152,6 +156,19 @@ var storyController = function(io) {
 			}
 
 			res.json(writers);
+		});
+	});
+
+	router.get('/:id/snippets', function(req, res){
+		var id = req.params.id;
+
+		Story.find({ _id: id }, function(err, snippets){
+			if(err){
+				res.json({ status: "ERROR", msg: err });
+				return;
+			}
+
+			res.json(snippets[0].sections);
 		});
 	});
 
