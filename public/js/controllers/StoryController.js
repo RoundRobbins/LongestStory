@@ -29,9 +29,13 @@ angular.module('RoundRobin')
 		getWriters();
 	});
 
+	socket.on('USER_DETACH', function(){
+		console.log('User detached');
+		$('#write-pad').modal('close');
+	});
+
 	socket.on('USER_SWITCH', function(data){
 		var user = UserService.getUser();
-
 		console.log(data);
 
 		if(data.nonce === user.nonce){
@@ -46,7 +50,7 @@ angular.module('RoundRobin')
 
 	socket.on('REFRESH_STORY', function(data){
 		getSnippets();
-	})
+	});
 
 	var getWriters = function(){
 		StoryService.getWriters().then(function(result){

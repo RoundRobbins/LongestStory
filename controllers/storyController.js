@@ -28,7 +28,7 @@ var storyController = function(io) {
 
 		var getNextUser = function(){
 			currUser = "";
-			var q = User.find({ isWriter: true }).sort({ timestamp: -1 }).limit(1);
+			var q = User.find({ isWriter: true }).sort({ timestamp: 1 }).limit(1);
 			q.exec(function(err, result){
 				if(err) throw err;
 
@@ -45,12 +45,14 @@ var storyController = function(io) {
 
 		if(currUser !== undefined && currUser !== ""){
 			console.log("Detaching current user");
-			io.emit('REFRESH_WRITERS');
 			User.findOneAndUpdate({ _id: currUser }, { isWriter: false, writerNonce: null }, function(err, result){
 				if(err){
 					console.log(err);
 					return;
 				}
+
+				io.emit('USER_DETACH');
+				io.emit('REFRESH_WRITERS');
 				getNextUser();
 			});
 		}
@@ -105,7 +107,7 @@ var storyController = function(io) {
 
 				triggerRotation();
 			});
-		}, 30000);
+		}, 3000);
 
 		res.json({ status: "SUCCESS" });
 	});
