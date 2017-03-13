@@ -1,0 +1,24 @@
+{
+  "name": "round-robin",
+  "description": "Build the story, together",
+  "main": "app.js",
+  "authors": [
+    "Round-Robins"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/RoundRobbins/LongestStory",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "auth0-lock": "^10.11.0",
+    "angular-lock": "^1.0.5",
+    "angular-jwt": "^0.1.9",
+    "auth0.js": "^8.2.0",
+    "angular-auth0": "^1.0.6"
+  }
+}
