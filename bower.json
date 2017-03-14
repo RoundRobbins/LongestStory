@@ -15,10 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "auth0-lock": "^10.11.0",
+    "angular": "1.6.2",
+    "auth0-lock": "10.11.0",
     "angular-lock": "^1.0.5",
     "angular-jwt": "^0.1.9",
-    "auth0.js": "^8.2.0",
+    "auth0.js": "7.6.1",
     "angular-auth0": "^1.0.6"
   }
 }
