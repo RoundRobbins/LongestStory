@@ -2,7 +2,7 @@ angular.module('RoundRobin')
 .factory('UserService', function($http, $q, $state, authManager, angularAuth0, jwtHelper, $location){
 	var baseUrl = "http://127.0.0.1:3000";
 	var authenticated = false;
-	var user = { nickname: "" };
+	var user = { nickname: ""};
 
 	var o = {};
 
@@ -22,11 +22,19 @@ angular.module('RoundRobin')
       localStorage.setItem('profile', JSON.stringify(profileData));
       userProfile = profileData;
 
-      $location.path('/story');
+      $http.post(baseUrl + '/user/signin', { nickname: nickname }).then(function(result){
+        console.log(result);
+        user = result.data;
+        $location.path('/story');
+      }, function(err){
+        console.log(err);
+      });
     });
   }
 
-	o.signin = function(){
+	o.signin = function(user){
+    nickname = user.nickname;
+
 		angularAuth0.login({
       connection: 'google-oauth2',
       responseType: 'token',
