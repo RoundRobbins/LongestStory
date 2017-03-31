@@ -169,8 +169,9 @@ var storyController = function(io) {
 				res.json({ status: "ERROR", msg: err });
 				return;
 			}
-
-			res.json(snippets[0].sections);
+			if (snippets.length > 0) {
+				res.json(snippets[0].sections);
+			}
 		});
 	});
 
