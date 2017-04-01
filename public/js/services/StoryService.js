@@ -32,7 +32,7 @@ angular.module('RoundRobin')
 	o.getStorySnippets = function(id){
 		var deferred = $q.defer();
 
-		$http.get(baseUrl + '/story/58a9a7be28bce4b4e7f16648/snippets').then(function(response){
+		$http.get(baseUrl + '/story/58df1784e599f58a50729b7d/snippets').then(function(response){
 			deferred.resolve(response.data);
 		}, function(err){
 			deferred.reject({ status: "ERROR", msg: err });
@@ -43,8 +43,7 @@ angular.module('RoundRobin')
 
 	o.submitSnippet = function(snippet){
 		var deferred = $q.defer();
-
-		$http.post(baseUrl + '/story/58a9a7be28bce4b4e7f16648/append', snippet).then(function(response){
+		$http.post(baseUrl + '/story/58df1784e599f58a50729b7d/append', snippet).then(function(response){
 			deferred.resolve(response.data);
 		}, function(err){
 			deferred.reject({ status: "ERROR", msg: err });
