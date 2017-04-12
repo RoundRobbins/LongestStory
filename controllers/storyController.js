@@ -3,6 +3,8 @@ var crypto = require('crypto');
 var Story = require('../models/story');
 var User = require('../models/user');
 
+var inRotation = false;
+
 var storyController = function(io) {
 	var router = express.Router();
 
@@ -15,8 +17,10 @@ var storyController = function(io) {
 	};
 
 	var currUser = "";
+	var currUserNonce = "";
 	var inVoting = false;
 	var timeOut = -1;
+	var listEmpty = false;
 
 	io.on('connection', function(socket){
 		console.log('Robin in the nest...');
@@ -29,14 +33,18 @@ var storyController = function(io) {
 		var getNextUser = function(){
 			currUser = "";
 			var q = User.find({ isWriter: true }).sort({ timestamp: 1 }).limit(1);
+
 			q.exec(function(err, result){
 				if(err) throw err;
 
 				if(result.length === 0){
+					listEmpty = true;
 					return;
 				}
 
+				listEmpty = false;
 				currUser = result[0]._id;
+				currUserNonce = result[0].writerNonce;
 
 				io.emit('USER_SWITCH', { writer: result[0].nickname, nonce: result[0].writerNonce });
 				console.log(currUser);
@@ -51,7 +59,7 @@ var storyController = function(io) {
 					return;
 				}
 
-				io.emit('USER_DETACH');
+				io.emit('USER_DETACH', { nonce: currUserNonce });
 				io.emit('REFRESH_WRITERS');
 				getNextUser();
 			});
@@ -59,6 +67,7 @@ var storyController = function(io) {
 		else{
 			getNextUser();
 		}
+
 
 		timeOut = setTimeout(function(){
 			triggerRotation();
@@ -143,6 +152,13 @@ var storyController = function(io) {
 			if(err){
 				res.json({ status: "ERROR", msg: err });
 				return;
+			}
+
+			if(listEmpty){
+				clearTimeout(timeOut);
+				console.log("Triggering new rotation...");
+				console.log(listEmpty);
+				triggerRotation();
 			}
 
 			io.emit('REFRESH_WRITERS');

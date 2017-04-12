@@ -25,13 +25,15 @@ angular.module('RoundRobin')
 	});
 
 	socket.on('REFRESH_WRITERS', function(data){
-		$('#write-pad').modal('close');
 		getWriters();
 	});
 
-	socket.on('USER_DETACH', function(){
-		console.log('User detached');
-		$('#write-pad').modal('close');
+	socket.on('USER_DETACH', function(data){
+		console.log(data);
+		var user = UserService.getUser();
+		if(data.nonce === user.nonce){
+			$('#write-pad').modal('close');
+		}
 	});
 
 	socket.on('USER_SWITCH', function(data){
