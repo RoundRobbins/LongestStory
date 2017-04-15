@@ -53,4 +53,21 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="vote-pad" class="modal bottom-sheet">
+		<div class="row">
+			<h5 class="col s3 offset-s1"> Go no go...? </h5>
+		</div>
+
+		<div class="row">
+			<h6 class="col s3 offset-s1"> {{ voteSnippet }} </h5>
+		</div>
+
+		<div class="vote-container row">
+			<div class="col s1">
+				<a ng-click="vote('U')" class="btn waves-effect waves-light white"><i class="material-icons black-text">thumb_up</i></a>
+				<a ng-click="vote('D')" class="btn waves-effect waves-light white"><i class="material-icons black-text">thumb_down</i></a>
+			</div>
+		</div>
+	</div>
 </div>

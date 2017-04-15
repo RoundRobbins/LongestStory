@@ -1,6 +1,6 @@
 angular.module('RoundRobin')
 .controller('StoryCtrl', function($scope, StoryService, UserService){
-	var socket = io.connect('http://127.0.0.1:3000/nest');
+	var socket = io.connect('http://localhost:3000/nest');
 
 	$scope.user = UserService.getUser();
 	$scope.writers = [];
@@ -14,6 +14,8 @@ angular.module('RoundRobin')
 		},
 		content: ""
 	};
+
+	$scope.voteSnippet = "";
 
 	socket.on('SOCK_HELLO', function(data){
 		console.log(data);
@@ -51,8 +53,22 @@ angular.module('RoundRobin')
 	});
 
 	socket.on('REFRESH_STORY', function(data){
+		$("#vote-pad").modal('close');
 		getSnippets();
 	});
+
+	socket.on('VOTE_SNIPPET', function(data){
+		console.log(data);
+		var user = UserService.getUser();
+
+		if(user.nonce != data.nonce){
+			$scope.$apply(function(){
+				$scope.voteSnippet = data.snippet;
+			})
+			$("#vote-pad").modal('open');
+		}
+
+	})
 
 	var getWriters = function(){
 		StoryService.getWriters().then(function(result){
@@ -107,6 +123,15 @@ angular.module('RoundRobin')
 		StoryService.submitSnippet($scope.snippet).then(function(result){
 			console.log(result);
 			$('#write-pad').modal('close');
+		}, function(err){
+			console.log(err);
+		})
+	}
+
+	$scope.vote = function(vote){
+		StoryService.voteSnippet(vote).then(function(result){
+			$('#vote-pad').modal('close');
+			console.log("vote submitted");
 		}, function(err){
 			console.log(err);
 		})

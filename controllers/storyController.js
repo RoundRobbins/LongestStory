@@ -12,7 +12,8 @@ var storyController = function(io) {
 		content: null,
 		votes: {
 			up: 0,
-			down: 0
+			down: 0,
+			voters: []
 		}
 	};
 
@@ -90,7 +91,7 @@ var storyController = function(io) {
 	router.post('/:id/append', function(req, res){
 		var id = req.params.id;
 		snippet.content = req.body;
-		var inVoting = true;
+		inVoting = true;
 		console.log("CurrUser: " + currUser);
 		console.log("Snippet author: " + snippet.content.author);
 
@@ -102,21 +103,30 @@ var storyController = function(io) {
 
 		clearTimeout(timeOut);
 
+		io.emit('VOTE_SNIPPET', { nonce: currUserNonce, snippet: snippet.content.content });
+
 		setTimeout(function(){
-			//include some vote logic here
+			inVoting = false;
+			var totalVotes = snippet.votes.up + snippet.votes.down;
+
+			if(totalVotes != 0 && snippet.votes.up / totalVotes < 0.5){
+				console.log("Snippet rejected");
+				triggerRotation();
+				return;
+			}
+
 			Story.findOneAndUpdate({ _id: id }, { $push: { sections: snippet.content } }, function(err, result){
 				if(err){
 					console.log("Couldn't append the story...");
 					return;
 				}
-				snippet.votes = { up: 0, down: 0};
-				inVoting = false;
+				snippet.votes = { up: 0, down: 0, voters: [] };
 				io.emit('REFRESH_STORY');
 				console.log(result);
 
 				triggerRotation();
 			});
-		}, 3000);
+		}, 6000);
 
 		res.json({ status: "SUCCESS" });
 	});
@@ -125,15 +135,18 @@ var storyController = function(io) {
 		var vote = req.body.vote;
 		var id = req.params.id;
 
+
 		if(!inVoting){
 			res.json({ status: "ERROR", "msg": "No new snippet" });
 			return;
 		}
 
-		if(snippet === undefined || snippet.id === id){
+		if(snippet === undefined || snippet.content.author.id === id || snippet.votes.voters.indexOf(id) > 0){
 			res.json({ status: "ERROR", msg: "Could not register vote"});
 			return;
 		}
+
+		snippet.votes.voters.push(id);
 
 		if(vote === "U"){
 			snippet.votes.up += 1;
@@ -141,6 +154,14 @@ var storyController = function(io) {
 		else if(vote === "D"){
 			snippet.votes.down -= 1;
 		}
+		else{
+			res.json({ status: "ERROR", msg: "Invalid vote"});
+			return;
+		}
+
+		console.log(snippet);
+		res.json({ status: "SUCCESS" });
+
 	});
 
 	router.post('/:id/write', function(req, res){

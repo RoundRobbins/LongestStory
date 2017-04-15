@@ -30,4 +30,7 @@ body{
 	background-color: #fff;
 }
 
+.vote-container{
+	padding: 0 18% 0 43%;
+}
 /*/Signin styles*/
