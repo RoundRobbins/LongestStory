@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="navigation-bar">
+    <div class="nav-wrapper" style="background-color:#12151b">
+      <a href="#" class="brand-logo"><img src="image/robin.png" class="brand-logo"></a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>p
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul> -->
+    </div>
+  </nav>
+
+  <br>
+  <div class="section no-pad-bot" id="index-banner">
+    
+      <br><br>
+      <h1 class="header center"><img src="image/robin-small.png" class="logo-home"></h1>
+      <p class="header-welcome">Welcome to the World's Longest Story</p>
+     <!--  <div class="row center">
+        <h5 class="header col s12 light home-description">We are creating a single story authored by individuals<br> across borders,&nbspoceans and continents.</h5>
+      </div>
+      <div class="row center">
+        <a href="#" id="download-button" class="waves-effect waves btn home-button">Sign Up</a>
+      </div>
+      <br>
+      <div class="row center">
+        <a href="#" id="download-button" class="waves-effect waves btn-flat">To the Story</a>
+      </div> -->
+      <div class="home-text">
+        <div class="row center">
+        <h5 class="header col s12 light home-description">We are creating a single story authored by individuals<br> across borders,&nbspoceans and continents.</h5>
+      </div>
+      <div class="row center">
+        <a href="/LongestStory/starter-template/starter-template/signIn.html" id="download-button" class="waves-effect waves btn home-button">Sign Up</a>
+      </div>
+      <br>
+      <div class="row center">
+        <a href="#" id="download-button" class="waves-effect waves btn-flat">To the Story</a>
+      </div>
+    </div>
+      <div class="cloud-stuff">
+        <ul id="scene" class="scene">
+                    <li class="layer" data-depth="0.20"><img src="image/clouds-top.png" class="background-clouds"></li>  
+                  <li class="layer" data-depth-x="-0.20" data-depth-y="-0.20"><img src="image/clouds-middle.png" class="background-clouds"></li>  
+                 <li class="layer" data-depth="0.40" data-depth-y="-0.30"><img src="image/clouds-bottom.png" class="background-clouds"></li>  
+                <li class="layer" data-depth="0.50"><img src="image/moon.png" class="background-clouds"></li>
+              </ul>
+        <!-- <img src="image/clouds.png" class="background-clouds"> -->
+      </div>
+      
+   
+  </div>
+  
+  <!--  Scripts-->
+  <script src="js/parallax.js"></script>
+  <script>
+
+  // Pretty simple huh?
+  var scene = document.getElementById('scene');
+  var parallax = new Parallax(scene);
+
+  </script>
+  <script src="js/jquery-3.2.0.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>
