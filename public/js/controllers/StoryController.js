@@ -1,5 +1,5 @@
 angular.module('RoundRobin')
-.controller('StoryCtrl', function($scope, StoryService, UserService){
+.controller('StoryCtrl', function($scope, $state, StoryService, UserService){
 	var socket = io.connect('http://localhost:3000/nest');
 
 	$scope.user = UserService.getUser();
@@ -109,6 +109,11 @@ angular.module('RoundRobin')
 
 		UserService.signin($scope.user);
 	}
+
+	$scope.signup = function(){
+		$state.go('signup');
+	}
+
 
 	$scope.write = function(){
 		StoryService.writeRequest().then(function(result){

@@ -13,6 +13,12 @@ app.config(function($stateProvider, $urlRouterProvider, angularAuth0Provider){
 		controller: 'StoryCtrl'
 	})
 
+	$stateProvider.state('signup', {
+		url: '/signup',
+		templateUrl: '../templates/signup.html',
+		controller: 'StoryCtrl'
+	})
+
 	$urlRouterProvider.otherwise('/signin');
 	angularAuth0Provider.init({
 	  clientID: 'A02UxmKAHdGacjvm4S777a443cQOgjuD',
