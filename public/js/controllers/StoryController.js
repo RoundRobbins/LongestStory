@@ -1,6 +1,8 @@
 angular.module('RoundRobin')
 .controller('StoryCtrl', function($scope, $state, StoryService, UserService){
 	var socket = io.connect('http://localhost:3000/nest');
+	var scene = document.getElementById('scene');
+	var parallax = new Parallax(scene);
 
 	$scope.user = UserService.getUser();
 	$scope.writers = [];

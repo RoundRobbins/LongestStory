@@ -28,11 +28,6 @@ app.config(function($stateProvider, $urlRouterProvider, angularAuth0Provider){
 
 app.run(function($rootScope, UserService) {
 
-  angular.element(document).ready(function () {
-		var scene = document.getElementById('scene');
-	  var parallax = new Parallax(scene);
-  });
-
   $rootScope.UserService = UserService;
   UserService.checkAuthOnRefresh();
 });
