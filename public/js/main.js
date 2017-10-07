@@ -1,6 +1,12 @@
 var app = angular.module('RoundRobin', ['ui.router', 'auth0.auth0', 'angular-jwt'])
 
 app.config(function($stateProvider, $urlRouterProvider, angularAuth0Provider){
+	$stateProvider.state('welcome', {
+		url: '/',
+		templateUrl: '../templates/welcome.html',
+		controller: 'StoryCtrl'
+	})
+
 	$stateProvider.state('story', {
 		url: '/story',
 		templateUrl: '../templates/story.html',
@@ -12,6 +18,7 @@ app.config(function($stateProvider, $urlRouterProvider, angularAuth0Provider){
 		templateUrl: '../templates/signin.html',
 		controller: 'StoryCtrl'
 	})
+
 
 	$stateProvider.state('signup', {
 		url: '/signup',

@@ -56,7 +56,7 @@ angular.module('RoundRobin')
         authManager.authenticate();
       }
     } else {
-      $location.path('/signin');
+      $location.path('/');
     }
   }
 
