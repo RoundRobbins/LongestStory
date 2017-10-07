@@ -1,9 +1,12 @@
-(function($){
-  $(function(){
+$().ready(function() {
+    // the body of this function is in assets/material-kit.js
+    materialKit.initSliders();
+    window_width = $(window).width();
 
-    $('.button-collapse').sideNav();
-    var scene = document.getElementById('scene');
-    var parallax = new Parallax(scene);
+    if (window_width >= 992) {
+        big_image = $('.wrapper > .header');
 
-  }); // end of document ready
-})(jQuery); // end of jQuery name space
+        $(window).on('scroll', materialKitDemo.checkScrollForParallax);
+    }
+
+});

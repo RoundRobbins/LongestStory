@@ -4,16 +4,17 @@ html
 		title="Round Robins"
 		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js")
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js")
 		script(src="https://cdn.socket.io/socket.io-1.4.5.js")
 		script(src="http://unpkg.com/angular-ui-router/release/angular-ui-router.min.js")
 		script(src='lib/auth0.js/build/auth0.min.js')
 		script(src='lib/angular-auth0/dist/angular-auth0.js')
 		script(src="lib/angular-lock/dist/angular-lock.js")
 		script(src="lib/angular-jwt/dist/angular-jwt.js")
-		script(src="js/vendor/jquery.parallax.min.js")
-		script(src="js/vendor/materialize.min.js")
-		script(src="js/vendor/parallax.min.js")
+		script(src="js/vendor/bootstrap.min.js")
+		script(src="js/vendor/material.min.js")
+		script(src="js/vendor/nouislider.min.js")
+		script(src="js/vendor/bootstrap-datepicker.js")
+		script(src="js/vendor/material-kit.js")
 		script(src="js/vendor/init.js")
 
 		script(src="js/main.js")
@@ -24,9 +25,11 @@ html
 		script(src="js/controllers/StoryController.js")
 
 		link(href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
-		link(href="http://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet")
-		link(href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet")
+		link(href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet")
+		link(href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet")
+		link(href="../css/bootstrap.min.css" rel="stylesheet")
+		link(href="../css/material-kit.css" rel="stylesheet")
 		link(href="../css/main.css" rel="stylesheet")
 
-	body(ng-app="RoundRobin")
+	body.index-page(ng-app="RoundRobin")
 		block content
