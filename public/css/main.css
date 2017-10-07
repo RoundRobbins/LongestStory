@@ -547,7 +547,7 @@ height:800px;
 }
 
 .header {
-  background-image: url('assets/img/bg2.jpg');
+  background-image: url('../img/bg2.jpg');
   top: -40px;
 }
 
