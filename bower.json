@@ -20,6 +20,7 @@
     "angular-lock": "^1.0.5",
     "angular-jwt": "^0.1.9",
     "auth0.js": "7.6.1",
-    "angular-auth0": "^1.0.6"
+    "angular-auth0": "^1.0.6",
+    "angular-ui-router": "0.4.2"
   }
 }
