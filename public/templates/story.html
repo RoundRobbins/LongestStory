@@ -4,7 +4,65 @@
 	</div>
 </div>
 
-<div class="row story-container">
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+
+		<!-- Tabs on Plain Card -->
+		<div class="card card-nav-tabs">
+			<div class="header header-primary">
+				<!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+				<div class="nav-tabs-navigation">
+					<div class="nav-tabs-wrapper">
+						<ul class="nav nav-tabs" data-tabs="tabs">
+							<li class="active">
+								<a href="#story" data-toggle="tab">Story</a>
+							</li>
+							<li>
+								<a href="#queue" data-toggle="tab">Writer Queue</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="content" style="height:950px;">
+				<div class="tab-content">
+					<div class="tab-pane active" id="story">
+						<ul class="messages">
+							<li class="message right appeared" ng-repeat="snippet in snippets">
+								<div class="avatar"></div>
+								<div class="text_wrapper">
+									<div class="text">
+										{{ snippet.content }}
+									</div>
+								</div>
+							</li>
+						</ul>
+						</div>
+						<div class="row ">
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-2">
+									<input type="text" value="" placeholder="Continue the story" class="form-control text-center message_input"/>
+								</div>
+							</div>
+						</div>
+						<div class="text-center">
+								<button class="btn btn-primary btn-fab btn-fab-mini btn-round send_message">
+									<i class="material-icons">send</i>
+								</button>
+						</div>
+					</div>
+					
+					<div class="tab-pane" id="queue">
+						<p> Writer queue here </p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<!-- End Tabs on plain Card -->
+	</div>
+</div
+<!-- <div class="row story-container">
 	<div class="col s4 left-nav">
 		<div class="row pane-header">
 			<div class="col offset-s1">
@@ -70,4 +128,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
